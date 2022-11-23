@@ -9,7 +9,6 @@ function getCookie (name) {
     if (match) return match[2];
 }
 
-// TODO: refactor this grossly O(n) function -> will be called on each onInput
 var matchData = function(input, dataList) {
     var reg = new RegExp(input.split('').join('\\w*').replace(/\W/, ""), 'i');
     return dataList.filter(function(data) {
@@ -41,8 +40,6 @@ function populateResults(results) {
             elems[0].parentNode.removeChild(elems[0]);
         }
     }
-    
-    // if (elems.length > 0){
 
     const typeAheadDropdown = document.getElementById("typeaheadDropdown-1");
     const firstResult = typeAheadDropdown.getElementsByClassName("css-1dbjc4n")[0];
@@ -50,7 +47,6 @@ function populateResults(results) {
         let option = results[r];
         let opt = document.createElement("div");
         opt.classList.add(...["css-1dbjc4n", "match-result"]);
-        // opt.innerHTML = option.name;
         let optChild1 = document.createElement("div");
         optChild1.classList.add(...["css-18t94o4", "css-1dbjc4n", "r-6dt33c", "r-1ny4l3l", "r-o7ynqc", "r-6416eg"]);
         let optChild2 = document.createElement("div");
@@ -102,7 +98,6 @@ async function makeRequest(){
     return res;
 }
 
-// TODO: this should be a set
 var dataFollowers = [];
 
 var dataRestIds = new Set();
@@ -114,8 +109,8 @@ input.addEventListener('keyup',
     {
         var textVal = e.target.value; 
         var key = event.which || event.keyCode || event.charCode; 
-        console.log(textVal); 
-        if(key == 8 && hasBeenTokenized && textVal.length == "") 
+        // console.log(textVal); 
+        if(key == 8 && hasBeenTokenized && textVal.length == 0) 
         { 
             input.value = ""; 
             document.getElementById("tokenized-node").remove();
@@ -126,7 +121,7 @@ input.addEventListener('keyup',
         { 
             input.value = "";
             const res = await makeRequest();
-            console.log(res)
+            // console.log(res)
             const followers = res.data.user.result.timeline.timeline.instructions[2].entries;
             for(let f=0;f<followers.length;f++) {
                 let follower = followers[f];
@@ -160,8 +155,6 @@ input.addEventListener('keyup',
         }
         if(hasBeenTokenized && input.value.length > 0){
             let matches = matchData(input.value, dataFollowers);
-            console.log(matches);
             populateResults(matches);
-            // console.log(dataFollowers)
         } 
     }, false);
