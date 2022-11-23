@@ -1,13 +1,13 @@
+function getCookie (name) {
+    var match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+    if (match) return match[2];
+}
+
 const csrf = getCookie('ct0');
 const twid = getCookie("twid").slice(4);
 
 var hasBeenTokenized=false;
 var input = document.querySelectorAll('[data-testid=SearchBox_Search_Input]')[0]; 
-
-function getCookie (name) {
-    var match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
-    if (match) return match[2];
-}
 
 var matchData = function(input, dataList) {
     var reg = new RegExp(input.split('').join('\\w*').replace(/\W/, ""), 'i');
