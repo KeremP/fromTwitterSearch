@@ -102,7 +102,7 @@ var dataFollowers = [];
 
 var dataRestIds = new Set();
 
-// TODO: refactor this to fetch only first 20 results, then as user scrolls, prefetcth the next 20, etc.
+// TODO: refactor this to fetch only first 20 results, then as user scrolls, fetch the next 20, populate when they get to bottom of feed, etc.
 //       similar to how /Followers api works
 input.addEventListener('keyup', 
     async (e) => 
