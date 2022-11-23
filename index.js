@@ -19,14 +19,58 @@ var matchData = function(input, dataList) {
     });
 };
 
+function tokenizeUser(user) {
+    let token = document.getElementById("tokenized-node");
+    g = document.createElement('div'); 
+    g.setAttribute("id", "tokenized-user"); 
+    g.innerHTML=user.screen_name; 
+    g.style.height=50; 
+    g.style.width=50; 
+    g.style.display="flex"; 
+    g.style.justifyContent="center"; 
+    g.style.alignItems="center"; 
+    token.after(g);
+    input.value = "";
+}
+
 function populateResults(results) {
+    const elems = document.getElementsByClassName("match-result");
+    if(elems) {
+        while(elems.length > 0){
+            elems[0].parentNode.removeChild(elems[0]);
+        }
+    }
+    
+    // if (elems.length > 0){
+
     const typeAheadDropdown = document.getElementById("typeaheadDropdown-1");
     const firstResult = typeAheadDropdown.getElementsByClassName("css-1dbjc4n")[0];
     for(let r=0;r<results.length;r++){
         let option = results[r];
         let opt = document.createElement("div");
-        opt.classList.add('css-1dbjc4n');
-        opt.innerHTML = option.name;
+        opt.classList.add(...["css-1dbjc4n", "match-result"]);
+        // opt.innerHTML = option.name;
+        let optChild1 = document.createElement("div");
+        optChild1.classList.add(...["css-18t94o4", "css-1dbjc4n", "r-6dt33c", "r-1ny4l3l", "r-o7ynqc", "r-6416eg"]);
+        let optChild2 = document.createElement("div");
+        let optChild3 = document.createElement("div");
+        let optChild4 = document.createElement("div");
+        let optChild4_2 = document.createElement("div");
+        optChild2.classList.add(...["css-1dbjc4n", "r-ymttw5", "r-1f1sjgu"]);
+        optChild3.classList.add(...["css-1dbjc4n", "r-18u37iz"]);
+        optChild4.classList.add(...["css-1dbjc4n", "r-v2d8zz", "r-18kxxzh", "r-1h0z5md", "r-1b7u577"]);
+        optChild4_2.classList.add(...["css-1dbjc4n", "r-1iusvr4", "r-16y2uox"]);
+        optChild4.innerHTML = `<img src=${option.img} />`
+        optChild4_2.innerHTML = `<div><p>${option.name}</p><p>@${option.screen_name}</p></div>`
+        
+        optChild1.appendChild(optChild2);
+        optChild2.appendChild(optChild3);
+        optChild3.appendChild(optChild4);
+        optChild3.appendChild(optChild4_2);
+        opt.appendChild(optChild1);
+        opt.onclick = (e) => {
+            tokenizeUser(option);
+        }
         typeAheadDropdown.insertBefore(opt, firstResult);
     }
 }
@@ -74,6 +118,7 @@ input.addEventListener('keyup',
         { 
             input.value = ""; 
             document.getElementById("tokenized-node").remove();
+            document.getElementById("tokenized-user").remove();
 
         } 
         if(textVal == "from:") 
@@ -90,7 +135,8 @@ input.addEventListener('keyup',
                     var f_item = {
                         name:user_results.legacy.name,
                         rest_id:user_results.rest_id,
-                        screen_name:user_results.legacy.screen_name
+                        screen_name:"@"+user_results.legacy.screen_name,
+                        img:user_results.legacy.profile_image_url_https
                     };
                     if(!dataRestIds.has(user_results.rest_id)){
                         dataRestIds.add(user_results.rest_id);
