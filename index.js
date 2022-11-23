@@ -31,6 +31,7 @@ function tokenizeUser(user) {
     g.style.alignItems="center"; 
     token.after(g);
     input.value = "";
+    setTimeout(() => {input.value = ""}, 600);
 }
 
 function populateResults(results) {
@@ -61,7 +62,7 @@ function populateResults(results) {
         optChild4.classList.add(...["css-1dbjc4n", "r-v2d8zz", "r-18kxxzh", "r-1h0z5md", "r-1b7u577"]);
         optChild4_2.classList.add(...["css-1dbjc4n", "r-1iusvr4", "r-16y2uox"]);
         optChild4.innerHTML = `<img src=${option.img} />`
-        optChild4_2.innerHTML = `<div><p>${option.name}</p><p>@${option.screen_name}</p></div>`
+        optChild4_2.innerHTML = `<div><p>${option.name}</p><p>${option.screen_name}</p></div>`
         
         optChild1.appendChild(optChild2);
         optChild2.appendChild(optChild3);
